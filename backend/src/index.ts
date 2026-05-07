@@ -17,6 +17,12 @@ connectDB().then(() => {
   console.log("MongoDB connected");
 });
 
+app.use(cors({
+  origin: "https://mini-jira-nine.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  credentials: true,
+}));
+
 // routes
 app.use("/api/tasks", taskRoutes);
 
