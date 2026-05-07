@@ -8,20 +8,19 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors({
+  origin: "https://mini-jira-nine.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  credentials: true,
+}));
+
 // middleware
-app.use(cors());
 app.use(express.json());
 
 // DB connection
 connectDB().then(() => {
   console.log("MongoDB connected");
 });
-
-app.use(cors({
-  origin: "https://mini-jira-nine.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  credentials: true,
-}));
 
 // routes
 app.use("/api/tasks", taskRoutes);
@@ -32,7 +31,8 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
-
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+export default app;
